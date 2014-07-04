@@ -2,9 +2,10 @@
 using PluginCore.Helpers;
 using PluginCore.Managers;
 using PluginCore.Utilities;
-using System;
+using ScintillaNet;
 using System.ComponentModel;
 using System.IO;
+using System.Windows.Forms;
 
 namespace HappinessMaker
 {
@@ -14,7 +15,7 @@ namespace HappinessMaker
         private string pluginGuid = "b96691e9-8d89-4c8b-a21e-7c6d57607610";
         private string pluginHelp = "";
         private string pluginDesc = "";
-        private string pluginAuth = "s.buynov";
+        private string pluginAuth = "Slavara";
         private string settingFilename;
         private Settings settings;
 
@@ -72,7 +73,7 @@ namespace HappinessMaker
         /// Object that contains the settings
         /// </summary>
         [Browsable(false)]
-        public Object Settings
+        public object Settings
         {
             get { return settings; }
         }
@@ -102,9 +103,22 @@ namespace HappinessMaker
         /// <summary>
         /// Handles the incoming events
         /// </summary>
-        public void HandleEvent(Object sender, NotifyEvent e, HandlingPriority prority)
+        public void HandleEvent(object sender, NotifyEvent e, HandlingPriority prority)
         {
-            TraceManager.Add(string.Format("{0}:{1}", "e", e));
+            switch (e.Type)
+            {
+                case EventType.Keys:
+                    bool handled = ((KeyEvent)e).Value == (Keys.Shift | Keys.Return);
+                    e.Handled = handled;
+                    if (handled)
+                    {
+                        ScintillaControl sci = PluginBase.MainForm.CurrentDocument.SciControl;
+                        if (sci == null) return;
+                        sci.LineEnd();
+                        sci.NewLine();
+                    }
+                    return;
+            }
         }
 
         #endregion
@@ -136,7 +150,8 @@ namespace HappinessMaker
         /// </summary> 
         private void AddEventHandlers()
         {
-            EventManager.AddEventHandler(this, EventType.Keys);
+            PluginBase.MainForm.IgnoredKeys.Add(System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.Enter);
+            EventManager.AddEventHandler(this, EventType.Keys, HandlingPriority.High);
         }
 
         /// <summary>
