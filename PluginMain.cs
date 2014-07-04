@@ -14,7 +14,7 @@ namespace HappinessMaker
         private string pluginName = "HappinessMaker";
         private string pluginGuid = "b96691e9-8d89-4c8b-a21e-7c6d57607610";
         private string pluginHelp = "";
-        private string pluginDesc = "";
+        private string pluginDesc = "Tried one - you will nevver be the same";
         private string pluginAuth = "Slavara";
         private string settingFilename;
         private Settings settings;
