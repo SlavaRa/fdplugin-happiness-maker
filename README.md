@@ -1,7 +1,7 @@
 DLL: https://dl.dropboxusercontent.com/u/63456010/FlashDevelop/Plugins/HappinessMaker.dll
 =========================
 
-Tried one - you will nevver be the same
+Tried one - you will never be the same
 =========================
 Help:<br/>
 1. Place the caret inside the word<br/>
