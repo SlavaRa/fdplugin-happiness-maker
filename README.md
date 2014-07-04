@@ -1,3 +1,5 @@
+DLL: https://dl.dropboxusercontent.com/u/63456010/FlashDevelop/Plugins/HappinessMaker.dll
+
 Tried one - you will nevver be the same
 =========================
 Help:<br/>
