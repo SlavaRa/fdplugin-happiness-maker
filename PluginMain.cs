@@ -1,82 +1,50 @@
 ﻿using PluginCore;
-using PluginCore.Helpers;
 using PluginCore.Managers;
-using PluginCore.Utilities;
 using ScintillaNet;
 using System.ComponentModel;
-using System.IO;
 using System.Windows.Forms;
 
 namespace HappinessMaker
 {
     public class HappinessMaker : IPlugin
     {
-        private string pluginName = "HappinessMaker";
-        private string pluginGuid = "b96691e9-8d89-4c8b-a21e-7c6d57607610";
-        private string pluginHelp = "";
-        private string pluginDesc = "Tried one - you will never be the same";
-        private string pluginAuth = "Slavara";
-        private string settingFilename;
-        private Settings settings;
-
         #region Required Properties
 
         /// <summary>
         /// Api level of the plugin
         /// </summary>
-        public int Api
-        {
-            get { return 1; }
-        }
+        public int Api { get { return 1; }}
 
         /// <summary>
         /// Name of the plugin
         /// </summary> 
-        public string Name
-        {
-            get { return pluginName; }
-        }
+        public string Name { get { return "HappinessMaker"; }}
 
         /// <summary>
         /// GUID of the plugin
         /// </summary>
-        public string Guid
-        {
-            get { return pluginGuid; }
-        }
+        public string Guid { get { return "b96691e9-8d89-4c8b-a21e-7c6d57607610"; }}
 
         /// <summary>
         /// Author of the plugin
         /// </summary> 
-        public string Author
-        {
-            get { return pluginAuth; }
-        }
+        public string Author { get { return "SlavaRa"; }}
 
         /// <summary>
         /// Description of the plugin
         /// </summary> 
-        public string Description
-        {
-            get { return pluginDesc; }
-        }
+        public string Description { get { return "Tried one - you will never be the same"; }}
 
         /// <summary>
         /// Web address for help
         /// </summary> 
-        public string Help
-        {
-            get { return pluginHelp; }
-        }
+        public string Help { get { return ""; }}
 
         /// <summary>
         /// Object that contains the settings
         /// </summary>
         [Browsable(false)]
-        public object Settings
-        {
-            get { return settings; }
-        }
+        public object Settings { get { return null; }}
 
         #endregion
 
@@ -87,8 +55,6 @@ namespace HappinessMaker
         /// </summary>
         public void Initialize()
         {
-            InitBasics();
-            LoadSettings();
             AddEventHandlers();
         }
 
@@ -97,7 +63,6 @@ namespace HappinessMaker
         /// </summary>
         public void Dispose()
         {
-            SaveSettings();
         }
 
         /// <summary>
@@ -126,40 +91,12 @@ namespace HappinessMaker
         #region Custom Methods
 
         /// <summary>
-        /// Initializes important variables
-        /// </summary>
-        private void InitBasics()
-        {
-            string path = Path.Combine(PathHelper.DataDir, pluginName);
-            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-            settingFilename = Path.Combine(path, "Settings.fdb");
-        }
-
-        /// <summary>
-        /// Loads the plugin settings
-        /// </summary>
-        private void LoadSettings()
-        {
-            settings = new Settings();
-            if (!File.Exists(settingFilename)) SaveSettings();
-            else settings = (Settings)ObjectSerializer.Deserialize(settingFilename, settings);
-        }
-
-        /// <summary>
         /// Adds the required event handlers
         /// </summary> 
         private void AddEventHandlers()
         {
             PluginBase.MainForm.IgnoredKeys.Add(System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.Enter);
             EventManager.AddEventHandler(this, EventType.Keys, HandlingPriority.High);
-        }
-
-        /// <summary>
-        /// Saves the plugin settings
-        /// </summary>
-        private void SaveSettings()
-        {
-            ObjectSerializer.Serialize(settingFilename, settings);
         }
 
         #endregion
