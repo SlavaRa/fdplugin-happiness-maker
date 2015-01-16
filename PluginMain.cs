@@ -70,20 +70,14 @@ namespace HappinessMaker
         /// </summary>
         public void HandleEvent(object sender, NotifyEvent e, HandlingPriority prority)
         {
-            switch (e.Type)
-            {
-                case EventType.Keys:
-                    bool handled = ((KeyEvent)e).Value == (Keys.Shift | Keys.Return);
-                    e.Handled = handled;
-                    if (handled)
-                    {
-                        ScintillaControl sci = PluginBase.MainForm.CurrentDocument.SciControl;
-                        if (sci == null) return;
-                        sci.LineEnd();
-                        sci.NewLine();
-                    }
-                    return;
-            }
+            if (e.Type != EventType.Keys) return;
+            bool handled = ((KeyEvent) e).Value == (Keys.Shift | Keys.Return);
+            e.Handled = handled;
+            if (!handled) return;
+            ScintillaControl sci = PluginBase.MainForm.CurrentDocument.SciControl;
+            if (sci == null) return;
+            sci.LineEnd();
+            sci.NewLine();
         }
 
         #endregion
@@ -95,7 +89,7 @@ namespace HappinessMaker
         /// </summary> 
         private void AddEventHandlers()
         {
-            PluginBase.MainForm.IgnoredKeys.Add(System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.Enter);
+            PluginBase.MainForm.IgnoredKeys.Add(Keys.Shift | Keys.Enter);
             EventManager.AddEventHandler(this, EventType.Keys, HandlingPriority.High);
         }
 
