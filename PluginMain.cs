@@ -1,8 +1,7 @@
-﻿using PluginCore;
-using PluginCore.Managers;
-using ScintillaNet;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
+using PluginCore;
+using PluginCore.Managers;
 
 namespace HappinessMaker
 {
@@ -13,38 +12,38 @@ namespace HappinessMaker
         /// <summary>
         /// Api level of the plugin
         /// </summary>
-        public int Api { get { return 1; }}
+        public int Api => 1;
 
         /// <summary>
         /// Name of the plugin
         /// </summary> 
-        public string Name { get { return "HappinessMaker"; }}
+        public string Name => "HappinessMaker";
 
         /// <summary>
         /// GUID of the plugin
         /// </summary>
-        public string Guid { get { return "b96691e9-8d89-4c8b-a21e-7c6d57607610"; }}
+        public string Guid => "b96691e9-8d89-4c8b-a21e-7c6d57607610";
 
         /// <summary>
         /// Author of the plugin
         /// </summary> 
-        public string Author { get { return "SlavaRa"; }}
+        public string Author => "SlavaRa";
 
         /// <summary>
         /// Description of the plugin
         /// </summary> 
-        public string Description { get { return "Tried one - you will never be the same"; }}
+        public string Description => "Tried one - you will never be the same";
 
         /// <summary>
         /// Web address for help
         /// </summary> 
-        public string Help { get { return ""; }}
+        public string Help => "";
 
         /// <summary>
         /// Object that contains the settings
         /// </summary>
         [Browsable(false)]
-        public object Settings { get { return null; }}
+        public object Settings => null;
 
         #endregion
 
@@ -71,10 +70,10 @@ namespace HappinessMaker
         public void HandleEvent(object sender, NotifyEvent e, HandlingPriority prority)
         {
             if (e.Type != EventType.Keys) return;
-            bool handled = ((KeyEvent) e).Value == (Keys.Shift | Keys.Return);
+            var handled = ((KeyEvent) e).Value == (Keys.Shift | Keys.Return);
             e.Handled = handled;
             if (!handled) return;
-            ScintillaControl sci = PluginBase.MainForm.CurrentDocument.SciControl;
+            var sci = PluginBase.MainForm.CurrentDocument.SciControl;
             if (sci == null) return;
             sci.LineEnd();
             sci.NewLine();
